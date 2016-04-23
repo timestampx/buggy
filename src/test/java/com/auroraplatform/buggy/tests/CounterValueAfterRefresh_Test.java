@@ -10,6 +10,7 @@ import qa.Config;
 
 /**
  * Значение счетчика после обновления страницы
+ *
  * @author timestamp <n.chufyrina@gmail.com>
  */
 public class CounterValueAfterRefresh_Test extends BaseTestClass {
@@ -37,16 +38,21 @@ public class CounterValueAfterRefresh_Test extends BaseTestClass {
         assertTrue("URL страницы отличается от ожидаемого",
                 driver.getCurrentUrl().contains("members"));
 
-        membersPage.isMessageAboutLoggedInPresent();
-        
+        assertTrue("Сообщение об авторизации должно отображаться",
+                membersPage.isMessageAboutLoggedInPresent());
+
+        // Проверяем отображение блока Counter
+        assertTrue("Блок Counter должен отображаться",
+                membersPage.isBlocCounterPresent());
+
         // Получаем значение счетчика
         String counter = membersPage.getCounterValue();
-        
+
         // Обновляем страницу
         driver.navigate().refresh();
-        
+
         // Проверяем значение счетчика
         assertEquals("Значение счетчика отличается от ожидаемого",
-                counter , membersPage.getCounterValue());        
+                counter, membersPage.getCounterValue());
     }
 }

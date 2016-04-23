@@ -8,8 +8,8 @@ import qa.VisibilityOfElement;
 import qa.VisibilityOfElementLocated;
 
 /**
- * Базовая страница.
- * Описаны дополнительные методы работы со страницей.
+ * Базовая страница. Описаны дополнительные методы работы со страницей.
+ *
  * @author timestamp <n.chufyrina@gmail.com>
  */
 public class BasePage extends PageObject {

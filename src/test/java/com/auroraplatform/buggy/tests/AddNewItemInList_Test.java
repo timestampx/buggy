@@ -2,21 +2,21 @@ package com.auroraplatform.buggy.tests;
 
 import com.auroraplatform.buggy.pages.LoginPage;
 import com.auroraplatform.buggy.pages.MembersPage;
+import java.util.UUID;
 import org.junit.Assert;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import qa.Config;
 
 /**
- * Значение счетчика после нажатия на кнопку Increment
+ * Добавляем новый элемент в список
  *
  * @author timestamp <n.chufyrina@gmail.com>
  */
-public class CounterValueAfterIncrement_Test extends BaseTestClass {
+public class AddNewItemInList_Test extends BaseTestClass {
 
     @Test
-    public void counter_value_after_increment() {
+    public void add_new_item_in_list() {
 
         LoginPage loginPage = new LoginPage(driver);
 
@@ -38,18 +38,22 @@ public class CounterValueAfterIncrement_Test extends BaseTestClass {
         assertTrue("URL страницы отличается от ожидаемого",
                 driver.getCurrentUrl().contains("members"));
 
-        membersPage.isMessageAboutLoggedInPresent();
+        assertTrue("Сообщение об авторизации должно отображаться",
+                membersPage.isMessageAboutLoggedInPresent());
 
-        // Получаем значение счетчика
-        String counter = membersPage.getCounterValue();
-        int i = Integer.parseInt(counter) + 1;
-        String newCounter = Integer.toString(i);
+        // Проверяем отображение блока ItemsList
+        assertTrue("Блок ItemsList должен отображаться",
+                membersPage.isBlocItemsListPresent());
 
-        // Увеличиваем счетчик на 1
-        membersPage.clickIncrementButton();
+        // Заполняем поле ввода значения
+        String title = UUID.randomUUID().toString();
+        membersPage.setTitleField(title);
 
-        // Проверяем значение счетчика
-        assertEquals("Значение счетчика отличается от ожидаемого",
-                newCounter, membersPage.getCounterValue());
+        // Нажимаем кнопку Добавить
+        membersPage.clickAddButton();
+
+        // Проверяем, что значение добавилось
+        assertTrue(String.format("Значение %s должно отображаться", title),
+                membersPage.isItemInListPresent(title));
     }
 }
